@@ -1,0 +1,114 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "aeds",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "aeds::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-aeds-Debug-61d93d2eeab0db4770c9.json",
+					"name" : "aeds",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "analise::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-analise-Debug-92d06feff63c1b027e58.json",
+					"name" : "analise",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "concat_vet::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-concat_vet-Debug-1f3b013e752ed38aa09b.json",
+					"name" : "concat_vet",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "find_elementos::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-find_elementos-Debug-16a955329089e7163413.json",
+					"name" : "find_elementos",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "merge_sort::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-merge_sort-Debug-a23129335aac3f16b81a.json",
+					"name" : "merge_sort",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ordenacao_insercao::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ordenacao_insercao-Debug-c52f8debfbeb8d3b27e8.json",
+					"name" : "ordenacao_insercao",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ordenacao_selecao::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ordenacao_selecao-Debug-5815f73f82f84b0f4eaf.json",
+					"name" : "ordenacao_selecao",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug",
+		"source" : "C:/Users/0063398/Documents/Projects/aeds"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
