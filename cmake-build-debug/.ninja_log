@@ -1,3 +1,20 @@
 # ninja log v6
 4	664	7556643410082143	CMakeFiles/ordenacao_insercao.dir/lista2/ordenacao_insercao.cpp.obj	df5926415187738e
 667	775	7556643416712642	ordenacao_insercao.exe	cf3481df6e858cf9
+21	606	7558351173442504	CMakeFiles/ordenacao_selecao.dir/lista2/ordenacao_selecao.cpp.obj	f02a1d8fb8274961
+606	712	7558351179299482	ordenacao_selecao.exe	2f64b88fc82c35d8
+616	725	7558358014382704	impares.exe	4536893799021862
+5	588	7558365459593859	build.ninja	1bb1ef22d92cf996
+19	615	7558358008409409	CMakeFiles/impares.dir/lista2/impares.cpp.obj	99bfc5d40b023f9d
+19	639	7558361911236817	CMakeFiles/verifica_ordenacao.dir/lista2/verifica_ordenacao.cpp.obj	1d876bff73fd69cf
+640	746	7558361917435219	verifica_ordenacao.exe	ade749424ee62e02
+15	642	7558365070855935	CMakeFiles/inverte_vetor.dir/lista2/inverte_vetor.cpp.obj	1f645205cb897cc4
+643	752	7558365077126590	inverte_vetor.exe	78253cc633d41db
+36	1220	7558366207430746	CMakeFiles/inverte_vetor.dir/lista2/inverte_vetor.cpp.obj	1f645205cb897cc4
+1221	1435	7558366219274220	inverte_vetor.exe	78253cc633d41db
+20	612	7558367304228610	CMakeFiles/inverte_vetor.dir/lista2/inverte_vetor.cpp.obj	1f645205cb897cc4
+612	724	7558367310153573	inverte_vetor.exe	78253cc633d41db
+16	595	7558367611199129	CMakeFiles/soma_quadrados.dir/lista2/soma_quadrados.cpp.obj	c28ef524f7d1aee8
+595	704	7558367616984937	soma_quadrados.exe	bde2943ebbab83f
+6	565	7558370951482746	CMakeFiles/ordenacao_selecao.dir/lista2/ordenacao_selecao.cpp.obj	f02a1d8fb8274961
+566	674	7558370957084625	ordenacao_selecao.exe	2f64b88fc82c35d8

@@ -3,7 +3,10 @@ C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/concat_vet
 C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/ordenacao_insercao.dir
 C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/ordenacao_selecao.dir
 C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/merge_sort.dir
-C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/analise.dir
+C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/impares.dir
 C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/find_elementos.dir
+C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/verifica_ordenacao.dir
+C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/inverte_vetor.dir
+C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/soma_quadrados.dir
 C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/edit_cache.dir
 C:/Users/0063398/Documents/Projects/aeds/cmake-build-debug/CMakeFiles/rebuild_cache.dir
