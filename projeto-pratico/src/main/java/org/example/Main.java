@@ -55,7 +55,7 @@ class MergeSort implements SortAlgorithm {
         }
     }
 
-    private void merge(int[] array, int left, int middle, int right) {
+    /*private void merge(int[] array, int left, int middle, int right) {
         int n1 = middle - left + 1;
         int n2 = right - middle;
         int[] leftArray = new int[n1];
@@ -82,6 +82,38 @@ class MergeSort implements SortAlgorithm {
             array[k] = rightArray[j];
             j++;
             k++;
+        }
+    }*/
+
+    private void merge(int[] array, int left, int middle, int right) {
+        int leftIndex = left, rightIndex = middle + 1, auxIndex = 0;
+        int[] auxArray = new int[right - left + 1];
+
+        while (leftIndex <= middle && rightIndex <= right) {
+            if (array[leftIndex] <= array[rightIndex]) {
+                auxArray[auxIndex] = array[leftIndex];
+                leftIndex++;
+            } else {
+                auxArray[auxIndex] = array[rightIndex];
+                rightIndex++;
+            }
+            auxIndex++;
+        }
+
+        while (leftIndex <= middle) {
+            auxArray[auxIndex] = array[leftIndex];
+            auxIndex++;
+            leftIndex++;
+        }
+
+        while (rightIndex <= right) {
+            auxArray[auxIndex] = array[rightIndex];
+            auxIndex++;
+            rightIndex++;
+        }
+
+        for (auxIndex = 0; auxIndex < auxArray.length; auxIndex++) {
+            array[left + auxIndex] = auxArray[auxIndex];
         }
     }
 }
@@ -137,6 +169,46 @@ class QuickSort implements SortAlgorithm {
 }
 
 public class Main {
+    public static void testSortAlgorithm(SortAlgorithm algorithm, String algorithmName) {
+        int[] sizes = {100, 500, 1000, 5000, 20000, 50000, 100000, 500000};
+        String[] orders = {"random", "ascending", "descending"};
+        long seed = 42;
+
+        // Calculate the maximum width for each column
+        int maxAlgorithmNameLength = Arrays.stream(new String[]{"Algorithm", algorithmName}).mapToInt(String::length).max().orElse(0);
+        int maxSizeLength = Arrays.stream(new String[]{"Size", String.valueOf(sizes[sizes.length - 1])}).mapToInt(String::length).max().orElse(0);
+        int maxOrderLength = Arrays.stream(new String[]{"Order", "descending"}).mapToInt(String::length).max().orElse(0);
+        int maxDurationLength = Arrays.stream(new String[]{"Time (ms)", "10000000"}).mapToInt(String::length).max().orElse(0);
+
+        // Print the header
+        System.out.printf("%-" + maxAlgorithmNameLength + "s | %-" + maxSizeLength + "s | %-" + maxOrderLength + "s | %-" + maxDurationLength + "s%n",
+                "Algorithm", "Size", "Order", "Time (ms)");
+        System.out.println("-".repeat(maxAlgorithmNameLength + maxSizeLength + maxOrderLength + maxDurationLength + 9));
+
+        for (int size : sizes) {
+            for (String order : orders) {
+                int[] array = generateArray(size, order, seed);
+                long startTime = System.nanoTime();
+                algorithm.sort(array);
+                long endTime = System.nanoTime();
+                long duration = (endTime - startTime) / 1000000; // In milliseconds
+
+                // Print each result in a formatted manner
+                System.out.printf("%-" + maxAlgorithmNameLength + "s | %-" + maxSizeLength + "d | %-" + maxOrderLength + "s | %-" + maxDurationLength + "d%n",
+                        algorithmName, size, order, duration);
+            }
+        }
+        System.out.println("\n\n");
+    }
+
+    public static void main(String[] args) {
+        testSortAlgorithm(new InsertionSort(), "InsertionSort");
+        testSortAlgorithm(new SelectionSort(), "SelectionSort");
+        testSortAlgorithm(new MergeSort(), "MergeSort");
+        testSortAlgorithm(new BubbleSort(), "BubbleSort");
+        testSortAlgorithm(new QuickSort(), "QuickSort");
+    }
+
     public static int[] generateArray(int size, String order, long seed) {
         Random random = new Random(seed);
         int[] array = new int[size];
@@ -154,30 +226,5 @@ public class Main {
             }
         }
         return array;
-    }
-
-    public static void testSortAlgorithm(SortAlgorithm algorithm, String algorithmName) {
-        int[] sizes = {100, 500, 1000, 5000, 20000, 50000, 100000, 500000};
-        String[] orders = {"random", "ascending", "descending"};
-        long seed = 42;
-
-        for (int size : sizes) {
-            for (String order : orders) {
-                int[] array = generateArray(size, order, seed);
-                long startTime = System.nanoTime();
-                algorithm.sort(array);
-                long endTime = System.nanoTime();
-                long duration = (endTime - startTime) / 1000000; // Convert to milliseconds
-                System.out.println("Algorithm: " + algorithmName + ", Size: " + size + ", Order: " + order + ", Time: " + duration + " ms");
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        testSortAlgorithm(new InsertionSort(), "InsertionSort");
-        testSortAlgorithm(new SelectionSort(), "SelectionSort");
-        testSortAlgorithm(new MergeSort(), "MergeSort");
-        testSortAlgorithm(new BubbleSort(), "BubbleSort");
-        testSortAlgorithm(new QuickSort(), "QuickSort");
     }
 }
