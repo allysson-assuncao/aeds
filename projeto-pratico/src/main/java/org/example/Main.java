@@ -55,36 +55,6 @@ class MergeSort implements SortAlgorithm {
         }
     }
 
-    /*private void merge(int[] array, int left, int middle, int right) {
-        int n1 = middle - left + 1;
-        int n2 = right - middle;
-        int[] leftArray = new int[n1];
-        int[] rightArray = new int[n2];
-        System.arraycopy(array, left, leftArray, 0, n1);
-        System.arraycopy(array, middle + 1, rightArray, 0, n2);
-        int i = 0, j = 0, k = left;
-        while (i < n1 && j < n2) {
-            if (leftArray[i] <= rightArray[j]) {
-                array[k] = leftArray[i];
-                i++;
-            } else {
-                array[k] = rightArray[j];
-                j++;
-            }
-            k++;
-        }
-        while (i < n1) {
-            array[k] = leftArray[i];
-            i++;
-            k++;
-        }
-        while (j < n2) {
-            array[k] = rightArray[j];
-            j++;
-            k++;
-        }
-    }*/
-
     private void merge(int[] array, int left, int middle, int right) {
         int leftIndex = left, rightIndex = middle + 1, auxIndex = 0;
         int[] auxArray = new int[right - left + 1];
@@ -138,39 +108,65 @@ class BubbleSort implements SortAlgorithm {
 }
 
 class QuickSort implements SortAlgorithm {
+    private static final int INSERTION_SORT_THRESHOLD = 10;
+
     public void sort(int[] array) {
         quickSort(array, 0, array.length - 1);
     }
 
     private void quickSort(int[] array, int low, int high) {
-        if (low < high) {
-            int pivotIndex = partition(array, low, high);
-            quickSort(array, low, pivotIndex - 1);
-            quickSort(array, pivotIndex + 1, high);
+        while (low < high) {
+            if (high - low < INSERTION_SORT_THRESHOLD) {
+                insertionSort(array, low, high);
+                break;
+            } else {
+                int pi = partition(array, low, high);
+                if (pi - low < high - pi) {
+                    quickSort(array, low, pi - 1);
+                    low = pi + 1;
+                } else {
+                    quickSort(array, pi + 1, high);
+                    high = pi - 1;
+                }
+            }
         }
     }
 
     private int partition(int[] array, int low, int high) {
         int pivot = array[high];
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
+        int i = low - 1;
+        for (int j = low; j <= high - 1; j++) {
+            if (array[j] < pivot) {
                 i++;
-                int temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
+                swap(array, i, j);
             }
         }
-        int temp = array[i + 1];
-        array[i + 1] = array[high];
-        array[high] = temp;
+        swap(array, i + 1, high);
         return i + 1;
+    }
+
+    private void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    private void insertionSort(int[] array, int low, int high) {
+        for (int i = low + 1; i <= high; i++) {
+            int key = array[i];
+            int j = i - 1;
+            while (j >= low && array[j] > key) {
+                array[j + 1] = array[j];
+                j--;
+            }
+            array[j + 1] = key;
+        }
     }
 }
 
 public class Main {
     public static void testSortAlgorithm(SortAlgorithm algorithm, String algorithmName) {
-        int[] sizes = {100, 500, 1000, 5000, 20000, 50000, 100000, 500000};
+        int[] sizes = {100, 500, 1000, 5000, 20000, 50000/*, 100000, 500000*/};
         String[] orders = {"random", "ascending", "descending"};
         long seed = 42;
 
