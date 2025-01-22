@@ -1,5 +1,7 @@
 package org.example;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -165,7 +167,7 @@ class QuickSort implements SortAlgorithm {
 }
 
 public class Main {
-    public static void testSortAlgorithm(SortAlgorithm algorithm, String algorithmName) {
+    public static void testSortAlgorithm(SortAlgorithm algorithm, String algorithmName, FileWriter csvWriter) throws IOException {
         int[] sizes = {100, 500, 1000, 5000, 20000, 50000/*, 100000, 500000*/};
         String[] orders = {"random", "ascending", "descending"};
         long seed = 42;
@@ -187,9 +189,9 @@ public class Main {
                 long startTime = System.nanoTime();
                 algorithm.sort(array);
                 long endTime = System.nanoTime();
-                long duration = (endTime - startTime) / 1000000; // In milliseconds
+                long duration = (endTime - startTime) / 1000000;
 
-                // Print each result in a formatted manner
+                csvWriter.append(String.format("%s,%d,%s,%d\n", algorithmName, size, order, duration));// Print each result in a formatted manner
                 System.out.printf("%-" + maxAlgorithmNameLength + "s | %-" + maxSizeLength + "d | %-" + maxOrderLength + "s | %-" + maxDurationLength + "d%n",
                         algorithmName, size, order, duration);
             }
@@ -198,11 +200,16 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        testSortAlgorithm(new InsertionSort(), "InsertionSort");
-        testSortAlgorithm(new SelectionSort(), "SelectionSort");
-        testSortAlgorithm(new MergeSort(), "MergeSort");
-        testSortAlgorithm(new BubbleSort(), "BubbleSort");
-        testSortAlgorithm(new QuickSort(), "QuickSort");
+        try (FileWriter csvWriter = new FileWriter("sort_results.csv")) {
+            csvWriter.append("Algorithm,Size,Order,Time (ms)\n");
+            testSortAlgorithm(new InsertionSort(), "InsertionSort", csvWriter);
+            testSortAlgorithm(new SelectionSort(), "SelectionSort", csvWriter);
+            testSortAlgorithm(new MergeSort(), "MergeSort", csvWriter);
+            testSortAlgorithm(new BubbleSort(), "BubbleSort", csvWriter);
+            testSortAlgorithm(new QuickSort(), "QuickSort", csvWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static int[] generateArray(int size, String order, long seed) {
