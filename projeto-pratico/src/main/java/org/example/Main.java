@@ -1,7 +1,6 @@
 package org.example;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -249,6 +248,9 @@ class QuickSort implements SortAlgorithm {
 }
 
 public class Main {
+
+    private static final int MAX_TEST_SECTIONS = 5;
+
     public static void testSortAlgorithm(SortAlgorithm algorithm, String algorithmName, FileWriter csvWriter) throws IOException {
         int[] sizes = {100, 500, 1000, 5000, 20000, 50000/*, 100000, 500000*/};
         String[] orders = {"random", "ascending", "descending"};
@@ -271,7 +273,7 @@ public class Main {
                 long startTime = System.nanoTime();
                 algorithm.sort(array);
                 long endTime = System.nanoTime();
-                double duration = (endTime - startTime) / 1_000_000.0; // Changed to double for more precision
+                double duration = (endTime - startTime) / 1_000_000.0;
 
                 csvWriter.append(String.format("%s,%d,%s,%.3f,%d,%d\n", algorithmName, size, order, duration, algorithm.getSwapCount(), algorithm.getComparisonCount()));
                 System.out.printf("%-" + maxAlgorithmNameLength + "s | %-" + maxSizeLength + "d | %-" + maxOrderLength + "s | %-" + maxDurationLength + ".3f%n",
@@ -281,7 +283,7 @@ public class Main {
         System.out.println("\n\n");
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         try (FileWriter csvWriter = new FileWriter("sort_results.csv")) {
             csvWriter.append("Algorithm,Size,Order,Time (ms)\n");
             testSortAlgorithm(new InsertionSort(), "InsertionSort", csvWriter);
@@ -291,6 +293,32 @@ public class Main {
             testSortAlgorithm(new QuickSort(), "QuickSort", csvWriter);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }*/
+
+    public static void main(String[] args) {
+        try {
+            File csvFile = new File("sort_results.csv");
+            boolean append = csvFile.exists() && countTestSections(csvFile) < MAX_TEST_SECTIONS;
+
+            try (FileWriter csvWriter = new FileWriter(csvFile, append)) {
+                if (!append) {
+                    csvWriter.write("Algorithm,Size,Order,Time (ms),Swaps,Comparisons\n");
+                }
+                testSortAlgorithm(new InsertionSort(), "InsertionSort", csvWriter);
+                testSortAlgorithm(new SelectionSort(), "SelectionSort", csvWriter);
+                testSortAlgorithm(new MergeSort(), "MergeSort", csvWriter);
+                testSortAlgorithm(new BubbleSort(), "BubbleSort", csvWriter);
+                testSortAlgorithm(new QuickSort(), "QuickSort", csvWriter);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static int countTestSections(File csvFile) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+            return (int) reader.lines().filter(line -> line.startsWith("Algorithm")).count();
         }
     }
 
