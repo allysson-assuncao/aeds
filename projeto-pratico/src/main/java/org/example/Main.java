@@ -7,29 +7,55 @@ import java.util.Random;
 
 interface SortAlgorithm {
     void sort(int[] array);
+
+    int getSwapCount();
+
+    int getComparisonCount();
 }
 
 class InsertionSort implements SortAlgorithm {
+    private int swapCount = 0;
+    private int comparisonCount = 0;
+
     public void sort(int[] array) {
+        swapCount = 0;
+        comparisonCount = 0;
         int n = array.length;
         for (int j = 1; j < n; j++) {
             int key = array[j];
             int i = j - 1;
             while (i >= 0 && array[i] > key) {
+                comparisonCount++;
                 array[i + 1] = array[i];
                 i = i - 1;
+                swapCount++;
             }
+            comparisonCount++;
             array[i + 1] = key;
         }
+    }
+
+    public int getSwapCount() {
+        return swapCount;
+    }
+
+    public int getComparisonCount() {
+        return comparisonCount;
     }
 }
 
 class SelectionSort implements SortAlgorithm {
+    private int swapCount = 0;
+    private int comparisonCount = 0;
+
     public void sort(int[] array) {
+        swapCount = 0;
+        comparisonCount = 0;
         int n = array.length;
         for (int i = 0; i < n - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < n; j++) {
+                comparisonCount++;
                 if (array[j] < array[minIndex]) {
                     minIndex = j;
                 }
@@ -38,13 +64,27 @@ class SelectionSort implements SortAlgorithm {
                 int temp = array[i];
                 array[i] = array[minIndex];
                 array[minIndex] = temp;
+                swapCount++;
             }
         }
+    }
+
+    public int getSwapCount() {
+        return swapCount;
+    }
+
+    public int getComparisonCount() {
+        return comparisonCount;
     }
 }
 
 class MergeSort implements SortAlgorithm {
+    private int swapCount = 0;
+    private int comparisonCount = 0;
+
     public void sort(int[] array) {
+        swapCount = 0;
+        comparisonCount = 0;
         mergeSort(array, 0, array.length - 1);
     }
 
@@ -62,6 +102,7 @@ class MergeSort implements SortAlgorithm {
         int[] auxArray = new int[right - left + 1];
 
         while (leftIndex <= middle && rightIndex <= right) {
+            comparisonCount++;
             if (array[leftIndex] <= array[rightIndex]) {
                 auxArray[auxIndex] = array[leftIndex];
                 leftIndex++;
@@ -86,33 +127,61 @@ class MergeSort implements SortAlgorithm {
 
         for (auxIndex = 0; auxIndex < auxArray.length; auxIndex++) {
             array[left + auxIndex] = auxArray[auxIndex];
+            swapCount++;
         }
+    }
+
+    public int getSwapCount() {
+        return swapCount;
+    }
+
+    public int getComparisonCount() {
+        return comparisonCount;
     }
 }
 
 class BubbleSort implements SortAlgorithm {
+    private int swapCount = 0;
+    private int comparisonCount = 0;
+
     public void sort(int[] array) {
+        swapCount = 0;
+        comparisonCount = 0;
         int n = array.length;
         boolean swapped;
         for (int i = 0; i < n - 1; i++) {
             swapped = false;
             for (int j = 0; j < n - i - 1; j++) {
+                comparisonCount++;
                 if (array[j] > array[j + 1]) {
                     int temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
                     swapped = true;
+                    swapCount++;
                 }
             }
             if (!swapped) break;
         }
     }
+
+    public int getSwapCount() {
+        return swapCount;
+    }
+
+    public int getComparisonCount() {
+        return comparisonCount;
+    }
 }
 
 class QuickSort implements SortAlgorithm {
     private static final int INSERTION_SORT_THRESHOLD = 10;
+    private int swapCount = 0;
+    private int comparisonCount = 0;
 
     public void sort(int[] array) {
+        swapCount = 0;
+        comparisonCount = 0;
         quickSort(array, 0, array.length - 1);
     }
 
@@ -138,6 +207,7 @@ class QuickSort implements SortAlgorithm {
         int pivot = array[high];
         int i = low - 1;
         for (int j = low; j <= high - 1; j++) {
+            comparisonCount++;
             if (array[j] < pivot) {
                 i++;
                 swap(array, i, j);
@@ -151,6 +221,7 @@ class QuickSort implements SortAlgorithm {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
+        swapCount++;
     }
 
     private void insertionSort(int[] array, int low, int high) {
@@ -158,11 +229,22 @@ class QuickSort implements SortAlgorithm {
             int key = array[i];
             int j = i - 1;
             while (j >= low && array[j] > key) {
+                comparisonCount++;
                 array[j + 1] = array[j];
                 j--;
+                swapCount++;
             }
+            comparisonCount++;
             array[j + 1] = key;
         }
+    }
+
+    public int getSwapCount() {
+        return swapCount;
+    }
+
+    public int getComparisonCount() {
+        return comparisonCount;
     }
 }
 
@@ -176,12 +258,12 @@ public class Main {
         int maxAlgorithmNameLength = Arrays.stream(new String[]{"Algorithm", algorithmName}).mapToInt(String::length).max().orElse(0);
         int maxSizeLength = Arrays.stream(new String[]{"Size", String.valueOf(sizes[sizes.length - 1])}).mapToInt(String::length).max().orElse(0);
         int maxOrderLength = Arrays.stream(new String[]{"Order", "descending"}).mapToInt(String::length).max().orElse(0);
-        int maxDurationLength = Arrays.stream(new String[]{"Time (ms)", "10000000"}).mapToInt(String::length).max().orElse(0);
+        int maxDurationLength = Arrays.stream(new String[]{"Time (ms)", "10000000.000"}).mapToInt(String::length).max().orElse(0);
 
         // Print the header
-        System.out.printf("%-" + maxAlgorithmNameLength + "s | %-" + maxSizeLength + "s | %-" + maxOrderLength + "s | %-" + maxDurationLength + "s%n",
+        System.out.printf("%-" + maxAlgorithmNameLength + "s | %-" + maxSizeLength + "s | %-" + maxOrderLength + "s | %-" + maxDurationLength + "s | Swaps | Comparisons%n",
                 "Algorithm", "Size", "Order", "Time (ms)");
-        System.out.println("-".repeat(maxAlgorithmNameLength + maxSizeLength + maxOrderLength + maxDurationLength + 9));
+        System.out.println("-".repeat(maxAlgorithmNameLength + maxSizeLength + maxOrderLength + maxDurationLength + 20));
 
         for (int size : sizes) {
             for (String order : orders) {
@@ -189,10 +271,10 @@ public class Main {
                 long startTime = System.nanoTime();
                 algorithm.sort(array);
                 long endTime = System.nanoTime();
-                long duration = (endTime - startTime) / 1000000;
+                double duration = (endTime - startTime) / 1_000_000.0; // Changed to double for more precision
 
-                csvWriter.append(String.format("%s,%d,%s,%d\n", algorithmName, size, order, duration));// Print each result in a formatted manner
-                System.out.printf("%-" + maxAlgorithmNameLength + "s | %-" + maxSizeLength + "d | %-" + maxOrderLength + "s | %-" + maxDurationLength + "d%n",
+                csvWriter.append(String.format("%s,%d,%s,%.3f,%d,%d\n", algorithmName, size, order, duration, algorithm.getSwapCount(), algorithm.getComparisonCount()));
+                System.out.printf("%-" + maxAlgorithmNameLength + "s | %-" + maxSizeLength + "d | %-" + maxOrderLength + "s | %-" + maxDurationLength + ".3f%n",
                         algorithmName, size, order, duration);
             }
         }
@@ -215,6 +297,27 @@ public class Main {
     public static int[] generateArray(int size, String order, long seed) {
         Random random = new Random(seed);
         int[] array = new int[size];
+        if (order.equals("random")) {
+            for (int i = 0; i < size; i++) {
+                array[i] = random.nextInt(size);
+            }
+        } else if (order.equals("ascending")) {
+            for (int i = 0; i < size; i++) {
+            array[i] = i + 1;
+        }
+        } else if (order.equals("descending")) {
+            for (int i = 0; i < size / 2; i++) {
+                int temp = array[i];
+                array[i] = array[size - i - 1];
+                array[size - i - 1] = temp;
+            }
+        }
+        return array;
+    }
+
+    /*public static int[] generateArray(int size, String order, long seed) {
+        Random random = new Random(seed);
+        int[] array = new int[size];
         for (int i = 0; i < size; i++) {
             array[i] = random.nextInt(size);
         }
@@ -229,5 +332,5 @@ public class Main {
             }
         }
         return array;
-    }
+    }*/
 }
